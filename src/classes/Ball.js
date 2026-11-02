@@ -10,7 +10,7 @@ export class Ball {
   }
 
   update(dt) {
-    this.x += this.dx * dt;
+    this.x -= this.dx * dt;
     this.y -= this.dy * dt;
 
     //ball collisions
@@ -19,12 +19,21 @@ export class Ball {
       this.dy *= -1;
     }
 
-    if (this.y > this.game.paddle.y) {
-      this.game.live--;
-    }
     // ball to paddle collision
-    if (this.y + this.radius > this.game.paddle.y) {
+    if (
+      this.y + this.radius > this.game.paddle.y &&
+      this.y - this.radius < this.game.paddle.y + this.game.paddle.height &&
+      this.x + this.radius > this.game.paddle.x &&
+      this.x - this.radius < this.game.paddle.x + this.game.paddle.width
+    ) {
       this.dy *= -1;
+      this.game.stats.score++;
+    }
+
+    // gameover
+    if (this.y > this.game.cvs.height) {
+      this.game.live--;
+      this.game.stop();
     }
 
     //horizontal right

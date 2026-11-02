@@ -49,4 +49,9 @@ export class Game {
     this.running = true;
     requestAnimationFrame(this.loop);
   }
+
+  stop() {
+    if (!this.running) return;
+    this.running = false;
+  }
 }
