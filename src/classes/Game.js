@@ -1,6 +1,7 @@
 import { Ball } from './Ball.js';
 import { InputManager } from './InputManager.js';
 import { Paddle } from './Paddle.js';
+import { Stats } from './Stats.js';
 
 export class Game {
   constructor(canvas) {
@@ -11,18 +12,24 @@ export class Game {
     this.lastTime = 0;
     this.running = false;
 
+    this.stats = 0;
+    this.lives = 3;
+
     this.input = new InputManager();
     this.paddle = new Paddle(this);
     this.ball = new Ball(this);
+    this.stats = new Stats(this.stats);
   }
   update(dt) {
     this.paddle.update(dt, this.input);
     this.ball.update(dt);
+    this.stats.update(dt);
   }
 
   draw() {
     this.paddle.draw(this.ctx);
     this.ball.draw(this.ctx);
+    this.stats.draw(this.ctx);
   }
 
   loop = (timestamp) => {

@@ -5,12 +5,12 @@ export class Ball {
     this.fillColor = 'blue';
     this.x = this.game.paddle.x + this.game.paddle.width / 2;
     this.y = this.game.paddle.y - this.game.paddle.height;
-    this.dx = 200;
-    this.dy = 200;
+    this.dx = 300;
+    this.dy = 300;
   }
 
   update(dt) {
-    this.x -= this.dx * dt;
+    this.x += this.dx * dt;
     this.y -= this.dy * dt;
 
     //ball collisions
@@ -19,7 +19,10 @@ export class Ball {
       this.dy *= -1;
     }
 
-    // vertical bottom - paddle
+    if (this.y > this.game.paddle.y) {
+      this.game.live--;
+    }
+    // ball to paddle collision
     if (this.y + this.radius > this.game.paddle.y) {
       this.dy *= -1;
     }
