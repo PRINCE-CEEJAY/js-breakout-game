@@ -31,8 +31,8 @@ export class Ball {
     }
 
     // gameover
-    if (this.y > this.game.cvs.height) {
-      this.game.live--;
+    if (this.y - this.radius > this.game.cvs.height) {
+      this.game.stats.lives--;
       this.game.stop();
     }
 
