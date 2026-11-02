@@ -5,20 +5,33 @@ export class Ball {
     this.fillColor = 'blue';
     this.x = this.game.paddle.x + this.game.paddle.width / 2;
     this.y = this.game.paddle.y - this.game.paddle.height;
-    this.speed = 200;
+    this.dx = 200;
+    this.dy = 200;
   }
 
   update(dt) {
-    this.x -= this.speed * dt;
-    this.y -= this.speed * dt;
+    this.x -= this.dx * dt;
+    this.y -= this.dy * dt;
 
+    //ball collisions
+    // vertical top
     if (this.y - this.radius < 0) {
-      this.speed = -this.speed;
-      this.y = -this.y;
+      this.dy *= -1;
     }
 
+    // vertical bottom - paddle
     if (this.y + this.radius > this.game.paddle.y) {
-      this.speed = -this.speed;
+      this.dy *= -1;
+    }
+
+    //horizontal right
+    if (this.x + this.radius > this.game.cvs.width) {
+      this.dx *= -1;
+    }
+
+    // horizontal left
+    if (this.x - this.radius < 0) {
+      this.dx *= -1;
     }
   }
 
