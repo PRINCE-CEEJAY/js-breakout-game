@@ -11,14 +11,12 @@ export class Game {
     this.ctx = this.cvs.getContext('2d');
     this.lastTime = 0;
     this.running = false;
-
-    this.stats = 0;
-    this.lives = 3;
+    this.score = 0;
 
     this.input = new InputManager();
     this.paddle = new Paddle(this);
     this.ball = new Ball(this);
-    this.stats = new Stats(this.stats);
+    this.stats = new Stats(this.score, this);
   }
   update(dt) {
     this.paddle.update(dt, this.input);

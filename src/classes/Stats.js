@@ -1,9 +1,10 @@
 export class Stats {
-  constructor(score) {
+  constructor(score, game) {
     this.x = 5;
     this.y = 30;
-    this.score = score;
-    this.lives = 5;
+    this.game = game;
+    this.score = this.game.running === false ? 'IDLE' : score;
+    // this.lives = 5;
   }
 
   update(dt) {}

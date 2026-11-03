@@ -7,6 +7,9 @@ export class Ball {
     this.y = this.game.paddle.y - this.game.paddle.height;
     this.dx = 300;
     this.dy = 300;
+    this.hitPaddlePoint =
+      this.x - (this.game.paddle.x - this.game.paddle.width / 2);
+    this.angle = 60;
   }
 
   update(dt) {
@@ -27,13 +30,20 @@ export class Ball {
       this.x - this.radius < this.game.paddle.x + this.game.paddle.width
     ) {
       this.dy *= -1;
-      this.game.stats.score++;
+      // this.game.stats.score++;
     }
 
     // gameover
     if (this.y - this.radius > this.game.cvs.height) {
-      this.game.stats.lives--;
-      this.game.stop();
+      // this.game.stats.lives--;
+
+      this.hitPaddlePoint = this.hitPaddlePoint / (this.game.paddle.width / 2);
+
+      this.angle = this.hitPaddlePoint * (Math.PI / 3);
+
+      this.dy = dt * Math.sin(this.angle);
+      this.dx = -dt * Math.cos(this.angle);
+      this.resetPosition();
     }
 
     //horizontal right
@@ -51,5 +61,12 @@ export class Ball {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
     ctx.fill();
+  }
+
+  resetPosition() {
+    this.x = this.game.paddle.x + this.game.paddle.width / 2;
+    this.y = this.game.paddle.y - this.game.paddle.height;
+
+    this.game.stop();
   }
 }
